@@ -4,6 +4,10 @@
 ・例文を書く
 ・文法以外は日本語で書く
 
+型注釈
+変数名に型の値を代入すること
+const num: number = 123;
+
 パラメーター
 
 オブジェクト
@@ -26,6 +30,25 @@ let user = {
 let user = {
   キー: 値（機能）
 }
+
+void型
+引数や戻り値がない型のこと
+例文
+戻り値がない場合
+変数(プロパティ, 型) => void;
+使用例
+interface Human {
+  greeting(message: string): void;
+}
+const human: Human = {
+  greeting(message: string) {
+    console.log(message);
+  }
+}; // 出力した戻り値がにvoid型になる
+function human( age: number, weight: number ): number {
+  return age + weight
+}; // こちらだとage + weightの出力（console .log (1+2)など)したらnumber型になる
+return文みたいに値を返すと何かしらの型がついてしまう為、値を返さない時はvoidを使用する
 
 typeof
 
@@ -110,4 +133,157 @@ type Mappedtype = {
 type Mappedtype = {
     文字列リテラル: string;
     文字列リテラル2: string;
+}
+
+
+
+interface
+オブジェクトのみの型エイリアス
+interface オブジェクト名  {
+  プロパティ1: 型;
+  プロパティ2: 型;
+};
+type(型エイリアス)
+名前の付いた型のこと
+例文
+type 変数名 = {
+  プロパティ1: 型;
+  プロパティ2: 型;
+}
+変数やオブジェクトが使用できる
+const 変数: 変数名かオブジェクト名 = {
+  プロパティ1: 値;
+  プロパティ2: 値;
+}; // 型の検査ができる
+この2つの違いは?
+変数かオブジェクトかの違い
+interfaceは
+オブジェクトのみで使用できる
+interface オブジェクト名  {
+  プロパティ1: 型;
+  プロパティ2: 型;
+} | string ;// ユニオン型は出来ない
+型エイリアスはユニオン型もできる
+
+メソッドをオブジェクト型に指定する
+interface オブジェクト名  {
+  プロパティ1: 型;
+  プロパティ2: 型;
+  メソッド名(プロパティ: 型) => 返り値の型
+};
+const 変数: オブジェクト名  {
+  プロパティ1: 型;
+  プロパティ2: 型;
+  メソッド名(プロパティ3: 型) {
+    実行処理の内容
+  }
+};
+
+構造部分型
+例文
+interface Human {
+  name: string;
+  age: number;
+  greeting(message: string): void;
+}
+
+const tempDeveloper = {
+  name: 'Quill',
+  age: 38,
+  experience: 3,
+  greeting(message: string) {
+    console.log(message);
+  }
+}
+const user: Human = tempDeveloper
+; // パラメーターexperienceが増えてもconst user: Human = tepDeveloperが成立してしまう。
+; // この場合はuserのオブジェクトはtempDeveloperになる
+  
+ReadOnly
+指定すると読み込み専用になる
+例文
+interface Human {
+  readonly name: string;
+}
+user.name = 'aaa'; // interfaceでも型エイリアスでも読み込み専用なのでエラーが発生する
+
+interfaceの継承
+新しい型エイリアスを作成して、既存の型エイリアスに機能を追加できる
+（その逆もできる）
+例文
+interfaceの場合
+interface オブジェクト名2  {
+  プロパティ3: 型;
+}
+interface オブジェクト名1 extends オブジェクト名2 {
+  プロパティ1: 型;
+  プロパティ2: 型;
+}; // プロパティ3をオブジェクト名1追加した形になる
+type(型エイリアス)
+名前の付いた型のこと
+例文
+type 変数名2  = {
+  プロパティ3: 型;
+}
+type 変数名1 extends 変数名2 = {
+  プロパティ1: 型;
+  プロパティ2: 型;
+}; // typeエイリアスはextends使用出来ないのでエラーになる
+交差型(&)
+型エイリアスで継承を行う時に使用する
+例文
+type 変数名2  = {
+  プロパティ3: 型;
+}
+type 変数名1 = {
+  プロパティ1: 型;
+  プロパティ2: 型;
+} & 変数名2; // extendsを削除して& 変数名2最後に使用する
+
+型エイリアスで型継承する時に継承先に同じパラメーターがあった場合も同じプロパティで違う型を指定した場合はエラーにならない。
+型エイリアスなのでユニオン型になってしまう。
+例文
+type 変数名2  = {
+  プロパティ3: 型;
+}
+type 変数名1 = {
+  プロパティ3: 違う型;
+  プロパティ1: 型;
+  プロパティ2: 型;
+} & 変数名2
+結果
+プロパティ3 型 | 違う型になる
+
+interfaceで型継承する時に継承先に同じパラメーターがあった場合はエラーが出ない。その代わりに同じプロパティで違う型を指定した場合はエラーになる
+例文
+OK
+interface オブジェクト名2  {
+  プロパティ3: 型;
+}
+interface オブジェクト名1 extends オブジェクト名2 {
+  プロパティ3: 型;
+  プロパティ1: 型;
+  プロパティ2: 型;
+};
+NG
+interface オブジェクト名2  {
+  プロパティ3: 型;
+}
+interface オブジェクト名1 extends オブジェクト名2 {
+  プロパティ3: 違う型;
+  プロパティ1: 型;
+  プロパティ2: 型;
+};
+
+？(疑問符)
+プロパティの後に？をつけると、そのパラメーターは使用してもしなくてもよい型になる。
+例文
+type 変数名1 = {
+  プロパティ1: 型;
+  プロパティ2?: 型;
+}
+
+const 変数名3: 変数名1 = {
+    プロパティ1: 値;
+    プロパティ2: 値; // あってもなくてもよい
 }
