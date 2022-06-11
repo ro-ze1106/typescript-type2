@@ -1,0 +1,119 @@
+ルール
+・抽象的に書かない
+・コピペしない
+・例文を書く
+・文法以外は日本語で書く
+
+function
+関数宣言を行う
+引数を使用して関数の内容を定義する
+function 関数名(引数1,引数2) {
+  実行処理 return 引数1 + 引数2(戻り値);
+}
+
+console.log(関数名(引数1,引数2));
+「この場合は引数1,引数2を足した戻り値が出力される。」
+
+実行例
+function calcRectArea(width, height) {
+  return width * height;
+}
+
+console.log(calcRectArea(5, 6));
+// expected output: 30
+
+関数
+この中に引数や実行処理したい文を入力し、出力したい時は関数名を用いて使用する。
+
+引数
+その関数内で使用されるパラメーターの機能名。
+
+パラメーター
+関数に渡される名前付きの変数
+例文
+function 関数名(引数: 値) {
+  return 引数
+}
+(引数: 値)の一括りをパラメーターと言う
+
+戻り値
+実行処理の結果を呼び出し、その結果の値を使用する事ができる
+例　1＋1＝2⇦この2が使用できる。
+ちなみに1＋1＝⇦これは実行処理のこと
+
+return文
+関数が実行された時に、どの値を返すかを指定するできる
+例文
+function hoge() {
+  return 0; //「0」を返すように定義する
+}
+これで関数（実行したい処理の値）が完成
+この関数を出力する場合はconstを使用し変数に変換する
+
+console.log()
+()内に文字列や変数を書く事でウェブコンソールに出力するできる
+
+const
+変数宣言する構文、ただし「再代入、再宣言できない変数」
+例文
+function hoge() {
+  return 0;
+}
+const x = hoge; // xにhogeを代入した
+出力する場合は,
+console.log(x);
+
+NG例文
+const x = 1
+const x = 2; // こちらが再宣言 NG
+x = x +1; // こちらが再代入 NG
+
+for文
+繰り返し何か実行を行うための文
+for ([初期化式]; [条件式]; [加算式])
+  文
+例文
+for (let 変数 = 0; 変数 < 5; 変数++) {
+  // 値が0から4までけい5回実行される
+}
+こちらは、条件式の為このコードだけでは機能しない
+
+in文
+指定されたプロパティが指定されたオブジェクトにある場合はtrueを返す
+例文
+const car = { make: 'Honda'};
+console.log('make' in car); // carの中にmakeがあるのでtrue
+
+if文
+truthyならば条件文を実行、falsyならばfalsyの条件文を実行する条件分岐
+function tes(a) {
+  let result;
+  if (a > 0) {
+    result = 'postive';
+  } else {
+    result = 'NOT positive';
+  }
+  return result;
+}
+
+console.log(tes(-1));
+; // (tes(-1))値「-1」が0以上ならtrueを返し、0未満ならelseを返す
+
+三項演算子
+正しい値(true)と間違えの値(false)を設定して、当てはまったら方の値を返す。
+例文
+function 関数名(プロパティ) {
+  return (プロパティ ? '真値' : '偽値')
+}; // ？(疑問符)の後に真値、コロン(:)の後に偽値を書く
+
+console.log(関数名(true))
+
+console.log(関数名(false))
+結果
+> "真値"
+> "偽値"
+
+
+of文
+
+getElementbyId
