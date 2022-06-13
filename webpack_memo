@@ -1,0 +1,193 @@
+webpack
+http通信でローカルサーバーを使用できるライブラリ
+使用方法
+npm install --save-dev webpack webpack-cli
+package.json
+"scripts": {
+    "変数名": "webpack"
+  },
+ターミナル
+npm run 変数名
+
+scripts
+コマンドをエイリアス(別名)にできる
+例文
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+    "エイリアス": "コマンド"
+  },
+コマンド使用方法
+npm run エイリアス
+
+webpack.config.js
+webpackの設定ファイル
+ファイル名は必ず「webpack.config.js」にしなければならない
+例文
+const path = require('path');
+module.exports = {
+  entry: '最初に読み込みたいファイル',
+  output: {
+    filename: '作成するファイルの名前',
+    path: path.resolve(どのパスにファイルを作成するか指定できる)
+  }
+}
+
+entry
+どのファイルから始めるかを指定する
+例文
+entry: './dist/index.js'(相対パス)
+
+output
+一つにまとめたファイルの作成
+filename
+一つにまとめたjsモジュールの名前を指定できる
+path
+filenameで作成されたファイルの置き場(パス)を指定する
+絶対パスで書かなければならない
+__dirname
+カレントディレクトリの絶対パスを指定できる
+require
+node.js上でのimport文という意味合い
+path
+node.jsが内蔵しているデフォルトであるモジュール
+使用例
+const path = require('path')
+これで、pathモジュールを変数名pathとして使用できる
+path.resolve
+指定したパスを作成できる
+例文
+path.resolve(絶対パス, '文字列1', '文字列2'); // ()内の1つ目は、絶対パスを必ず書く
+結果
+絶対パス/文字列1/文字列2
+output例文
+const path = require('path');
+module.exports = {
+  output: {
+    filename: '',
+    path: path.resolve()
+  }
+}
+
+defer
+html
+script要素のdefer属性は、ページ読み込み時に、外部のスクリプト・ファイルのスクリプトを実行する属性。
+
+devtool
+sourceMapの生成するかどうかとその方法を制御します
+例文
+module.exports = {
+  output: {
+    filename: '',
+    path: path.resolve()
+  },
+  devtool: '指定したいスタイル'
+}
+
+ts-loader
+.tsファイルから直接.jsファイルを作成できる仕組み
+使用方法
+npm install --save-dev ts-loader typescript
+
+module
+どのようなファイルをどう扱うをオブジェクト内に書く
+例文
+module: {
+  設定をここに書く
+}
+
+rules
+具体的な内容を書く
+例文
+module: {
+  rules: [{
+    設定をここに書く
+  }]; // 配列の中にオブジェクトとして書く
+}
+rulesの設定
+test
+広い意味で、どういうファイルに対して設定するかを書く
+「拡張子など（.tsなど）」
+正規表現で書くこと
+例文
+module: {
+  rules: [{
+    test: /どういうファイルかを書く/; // .は正規表現で何か1文字となってしまうので、拡張子を書きたい場合は「\.ts」で使用
+    ; // 「$」でファイルの終わりという意味
+  }]
+}
+use
+testで設定されたものに対して何をするのかを書く
+例文
+module: {
+  rules: [{
+    test: /どういうファイルかを書く/
+    use: '何をするか書く'; // ts-loaderを使用しているのでtsーloaderと今は書く
+  }]
+}
+exclude: /node_modules/
+typescriptにはあまり関係ないがjsの習慣に乗っとて書いておく
+resolve
+importで指定したファイルをextensionsで設定した拡張子を自動で割り当ててくれる
+例文
+resolve: {
+  extensions: ['拡張子']
+}
+
+webpack-dev-server
+webpackでwatchモードをしてくれる
+使用方法
+npm install --save-dev webpack-dev-server 
+package.json
+"scripts": {
+    "変数名": "webpack serve"
+  },
+ターミナル
+npm run 変数名
+
+watchモード
+ターミナルで、このモードするとTSファイルの変更したらJSファイルに自動的にコンパイルしてくれる機能
+例文
+watchモードにする
+index.ts
+let name = 'tomo'⇨'chika'に変更する
+index.js
+var ame = 'tomo'⇨'chika'に自動で変更される
+
+Hot Module Replacement
+tsファイルの編集を保存して自動でjsファイルに反映して、ブラウザがリロードされる仕組み
+
+publicPath
+指定したディレクトリのファイルを使用できる（まだ分からない）
+例文
+output: {
+    publicPath: '/ディレクトリ名/'
+  },
+
+開発環境と本番環境に分ける方法
+2つのファイルを作成
+webpack.prod.js 本番用
+webpack.dev.js 開発用
+package.jsonも編集する
+"scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack serve --config webpack.dev.js"
+  },; //  --configファイル名を指定することで、指定されたファイルのみ実行される
+  mode
+  'production'と'development'に指定できる
+  例文
+  mode: 'production'
+
+  plugins
+  色々な機能を追加できる機能
+  例文
+  plugins: [
+    追加したい機能
+  ]
+
+  clean-webpack-plugin
+  指定したディレクトリのファイルのみコンパイルして、それ以外のファイルは削除する
+  例文
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  plugins: [
+    new CleanWebpackPlugin()
+  ]
