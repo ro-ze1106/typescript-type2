@@ -127,6 +127,29 @@ console.log (変数名.値1);
 結果
 値4が出力される
 
+export
+同じ階層(ディレクトリ)のjsモジュール(拡張子が.jsのファイル、.tsや.tsxなど)から関数やオブジェクトを指定する事で、別のjsモジュールにimport文を使用すれば、指定した関数やオブジェクトを使用できる仕組み
+例文
+// 個別の機能のエクスポート
+// (var, let, const, function, class がエクスポート可能)
+./js_directory/index.js
+export let 変数名 = 処理内容
+
+exportとimportはセットとして考える
+import
+同じ階層のjsモジュールでexport文で指定された関数やオブジェクトを別のjsモジュールで関数やオブジェクトとして使用できる仕組み
+追記
+インポートされたモジュールは、宣言するかどうかにかかわらず、Strict モード(厳格)になります
+例文
+export文
+./js_directory/export.js
+export let 変数名 = 処理内容
+import文
+./js_directory/import.js
+import {変数名} from "./js_directory/export.js"
+console.log(変数名)
+
+
 of文
 
 getElementbyId
